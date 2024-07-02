@@ -1,0 +1,25 @@
+{
+    "[X] is a [Y] .": [
+        "[X] is a [Y] .",
+        "[X] is a type of [Y].",
+        "[X] is considered a sub-type of [Y] .",
+        "An instance of [Y] is a [X] .",
+        "[Y] encompasses [X].",
+        "[Y] is the broader category that [X] falls under.",
+        "[X] is classified as a subset of [Y].",
+        "Within the category of [Y], [X] is a distinct type.",
+        "A [Y] instance can be identified as a [X].",
+        "[X] falls within the classification of [Y].",
+        "[Y] includes [X] as one of its varieties.",
+        "[X] falls within the scope of [Y].",
+        "[Y] encompasses various types, with [X] being one of them.",
+        "In the realm of [Y], [X] is recognized as a specific subtype.",
+        "[X] is a subtype that fits under the umbrella of [Y].",
+        "[Y] is the parent category, and [X] is a subcategory within it.",
+        "[X] is a specialized form or variant of [Y].",
+        "[Y] comprises different types, with [X] being one of them.",
+        "[X] can be classified as a type that belongs to [Y].",
+        "[Y] contains subdivisions, with [X] being one of its divisions.",
+        "[Y] encompasses a range of types, among which [X] is included."
+    ]
+}

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#SBATCH --partition=rome
+#SBATCH --gpus=0
+#SBATCH --job-name=analyze8-mistral
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=28G
+#SBATCH --time=01:00:00
+#SBATCH --output=/home/ftinner/mai/job_output/analyze_exp_3_8_mistral7B_slurm_output_%A.out
+
+
+# env and code setup
+git pull
+BASE=$HOME/mai/
+module purge
+module load 2022
+module load Anaconda3/2022.05
+source $BASE/MAI_env/bin/activate
+
+# experiment setup
+BASE=$BASE/exp_3_set_proba
+SEED=42
+N_JOBS=4 # max: 16-2
+ENCODING_MODEL="mistralai/Mistral-7B-Instruct-v0.2"
+# ============= EXPERIMENTS =================
+
+EXP_NAME="hypernymy_500_50_3_shot_all_neg_mistral7B"
+DATASET_NAME="hypernymy"
+SUBJECTS=500
+OBJECTS=50
+python $BASE/analyze.py \
+    --seed $SEED --dataset_name $DATASET_NAME --wandb_run_name $EXP_NAME \
+    --out_path $BASE/$EXP_NAME --paraphrase_templates $BASE/paraphrases_hypernymy.json \
+    --n_instances_per_r $SUBJECTS --num_o $OBJECTS --n_jobs $N_JOBS  \
+    --model_name $ENCODING_MODEL --batch_size 1 \
+    --n_shot_examples 0 --example_column "all" \
+    --classification_thresholds 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.12 0.14 0.16 0.18 0.2 0.22 0.24 0.26 0.28 0.3 0.35 0.40 0.45 0.5 0.6 0.7 0.8 0.9 0.99 \
+    --grammar_postprocessing \
+    --n_shot_examples_negative 3 \
+    #--s_contexts $BASE/s_contexts_hypernymy.json 
+    
+deactivate

@@ -1,0 +1,69 @@
+#!/bin/bash
+
+#SBATCH --partition=rome
+#SBATCH --gpus=0
+#SBATCH --job-name=pp
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=28G
+#SBATCH --time=12:00:00
+#SBATCH --output=/home/ftinner/mai/job_output/pp_cpu_%A.out
+
+# env and code setup
+git pull
+BASE=$HOME/mai/
+module purge
+module load 2022
+module load Anaconda3/2022.05
+source $BASE/MAI_env/bin/activate
+
+# experiment setup
+BASE=$BASE/exp_3_set_proba
+SEED=42
+N_JOBS=4
+ENCODING_MODEL="mistralai/Mistral-7B-Instruct-v0.2"
+# ============= EXPERIMENTS =================
+
+EXP_NAME="hypernymy_500_50"
+DATASET_NAME="hypernymy"
+SUBJECTS=500
+OBJECTS=50
+python $BASE/prepare_data.py \
+    --seed $SEED --dataset_name $DATASET_NAME --wandb_run_name $EXP_NAME \
+    --out_path $BASE/$EXP_NAME --paraphrase_templates $BASE/paraphrases_hypernymy.json \
+    --n_instances_per_r $SUBJECTS --num_o $OBJECTS --n_jobs $N_JOBS  \
+    --model_name $ENCODING_MODEL --batch_size 128 \
+    --n_shot_examples 3 --example_column "all" \
+    --max_n_paraphrases -1 --max_n_objects 2 4 8 16 32 64 \
+    --classification_thresholds 0.1 0.25 0.5 0.75 0.9 \
+    --grammar_postprocessing --s_contexts $BASE/s_contexts_hypernymy.json 
+
+EXP_NAME="PopQA_test_50_50"
+DATASET_NAME="PopQA"
+SUBJECTS=50
+OBJECTS=50
+python $BASE/prepare_data.py \
+    --seed $SEED --dataset_name $DATASET_NAME --wandb_run_name $EXP_NAME \
+    --out_path $BASE/$EXP_NAME --paraphrase_templates $BASE/paraphrases_PopQA.json \
+    --n_instances_per_r $SUBJECTS --num_o $OBJECTS --n_jobs $N_JOBS  \
+    --model_name $ENCODING_MODEL --batch_size 128 \
+    --n_shot_examples 3 --example_column "all" \
+    --max_n_paraphrases -1 --max_n_objects 2 4 8 16 32 64 \
+    --classification_thresholds 0.1 0.25 0.5 0.75 0.9 \
+    --grammar_postprocessing
+
+EXP_NAME="trex_test_50_50"
+DATASET_NAME="trex"
+SUBJECTS=50
+OBJECTS=50
+python $BASE/prepare_data.py \
+    --seed $SEED --dataset_name $DATASET_NAME --wandb_run_name $EXP_NAME \
+    --out_path $BASE/$EXP_NAME --paraphrase_templates $BASE/paraphrase_df_trex.hf5 \
+    --n_instances_per_r $SUBJECTS --num_o $OBJECTS --n_jobs $N_JOBS  \
+    --model_name $ENCODING_MODEL --batch_size 128 \
+    --n_shot_examples 3 --example_column "all" \
+    --max_n_paraphrases -1 --max_n_objects 2 4 8 16 32 64 \
+    --classification_thresholds 0.1 0.25 0.5 0.75 0.9 \
+    --grammar_postprocessing
+
+deactivate
