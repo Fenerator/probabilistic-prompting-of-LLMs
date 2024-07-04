@@ -239,14 +239,6 @@ def main(args):
             # for sake of completeness: store the paraphrase dataset in same format
             paraphrase_df.to_hdf(OUT_PATH / "paraphrase_df.hf5", key="df", mode="w")
 
-            # full preprocessing requires downloaded pararel templates # TODO integrate better
-            # paraphrase_df = create_paraphrase_df(
-            #     df_unsampled,
-            #     type="trex",
-            #     template_PATH=template_PATH,
-            #     OUT_PATH=args.paraphrase_templates,
-            # )
-
         elif args.dataset_name == "hypernymy":
             df_unsampled = hypernymy_preprocessing(
                 hypernymy_PATH=OUT_PATH.parent / "hypernymy_examples.json"
@@ -280,7 +272,7 @@ def main(args):
         unsampled_stats = get_df_overview_stats(df_unsampled)
         unsampled_stats.to_csv(OUT_PATH / "unsampled_stats.csv")
 
-        if args.s_contexts:  # TODO can be deleted completely
+        if args.s_contexts: 
             with open(args.s_contexts) as f:
                 s_contexts = json.load(f)  # 'subject': context
 
@@ -364,7 +356,7 @@ def main(args):
     for r in original_relations:
         templates_paraphrased = paraphrase_df[paraphrase_df["original_template"] == r][
             "human_paraphrase_templates"
-        ].to_list()  # TODO adapt for other paras
+        ].to_list()  
         logging.info(f"Templates paraphrased: {templates_paraphrased}")
         # key is orig relation: list of orig + paraphrased templates
         paraphrases = [r]
@@ -432,8 +424,6 @@ def main(args):
     if args.dataset_name in ["PopQA", "hypernymy"]:
 
         # Postprocessing of sequences to make sure the are grammatically correct, for other datasets this is done in the preprocessing
-        # TODO more dynamic with [a/an] in template or sth
-
         if args.LM_postprocessing:
             model_name = "google/flan-t5-base"
             instruction = "Make only small modifications to the following sencence to ensure that it is grammatically correct. Do not change the structure of the sentence."

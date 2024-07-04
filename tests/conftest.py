@@ -7,9 +7,8 @@ import os
 from pathlib import Path
 
 HOME_PATH = os.path.expanduser("~/")
-OUT_PATH = Path(f"{HOME_PATH}/Py/MAI_Codebase/exp_3_set_proba/")  # TODO change this
+OUT_PATH = Path(f"{HOME_PATH}/Py/MAI_Codebase/exp_3_set_proba/")  
 RUN_NAME = "small_test_2_3_new"
-# RUN_NAME = "PopQA_test_2000_50_mistral7B" # TODO remove
 
 
 @pytest.fixture(scope="session")

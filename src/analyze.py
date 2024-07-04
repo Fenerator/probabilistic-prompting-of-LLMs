@@ -561,19 +561,6 @@ def main(args):
             out_path=PLOT_PATH / f"p_true_neg_boxplots_objects_n_para_{max_p}.html",
         )
 
-    # == AUC ROC CURVE == # TODO add here too
-    # by relation and overall
-    # df_auc = df_classification_results_all_p.dropna(subset=["auc"])
-
-    # plot_roc_curve(df_auc, out_path=PLOT_PATH / "roc_curve")
-
-    # == RISK COVERAGE CURVE ==
-    # by relation and overall
-    # plot_coverage_risk_curve(
-    #     df_classification_results_all_p,
-    #     risk_name="accuracy",
-    #     out_path=PLOT_PATH / "coverage_risk_curve_accuracy",
-    # )
 
     logging.info(f"analyze finished.")
 
