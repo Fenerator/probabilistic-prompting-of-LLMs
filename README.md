@@ -2,7 +2,7 @@
 
 ## Set up
 
-1. Install dependencies from [`environment.yml`](environment.yml) in a new conda environment:
+1. Install dependencies from [`environment.yml`](environment.yml) in a new conda environment (we use Python 3.11.5):
 
     ```bash
     conda env create -f environment.yml
@@ -21,6 +21,11 @@
 - [jobs](jobs/): Contains the scripts to run the experiments.
 - [tests](tests/): Contains the tests for the codebase.
 - [analysis](analysis/): Contains the analysis notebooks with tables and graphs
+  - [selective prediction](analysis/selective_prediction.ipynb)
+  - [in-context learning](analysis/n_shot.ipynb)
+  - [reading comprehension](analysis/RC.ipynb)
+- [examples](examples/): Interactive graphs to illustrate the method
+  - [paraphrase examples](examples/paraphrase_example.html)
 
 ## Example Usage
 
@@ -82,3 +87,7 @@ A full usage example is provided under [jobs](jobs/). The following is a brief o
     --n_shot_examples_negative 3 \
     #--s_contexts $BASE/s_contexts_hypernymy.json 
     ```
+
+## Method Visualized
+
+![Method](examples/paraphrase_example.png?raw=true)
