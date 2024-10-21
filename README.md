@@ -1,5 +1,9 @@
 # Probabilistic Prompting of Language Models
 
+## Resources
+
+[Probabilistic Prompting: Approach](Probabilistic_prompting_approach.pdf) | [Probabilistic Prompting: Thesis](Probabilistic_prompting_thesis.pdf)
+
 ## Set up
 
 1. Install dependencies from [`environment.yml`](environment.yml) in a new conda environment (we use Python 3.11.5):
